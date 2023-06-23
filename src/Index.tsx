@@ -1,8 +1,12 @@
 import MainNavigator from "./Navigators/Main";
+import { PaperProvider } from "react-native-paper";
+import { LightTheme } from "./Theme";
 
 const Index = () => {
   return (
-    <MainNavigator />
+    <PaperProvider theme={LightTheme}>
+      <MainNavigator/>
+    </PaperProvider>
   );
 }
 
