@@ -1,12 +1,13 @@
 import { MD3DarkTheme, MD3LightTheme, PaperProvider, adaptNavigationTheme } from 'react-native-paper';
 import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme, } from "@react-navigation/native";
+import { createContext, useState } from 'react';
 
 const { LightTheme: AdaptedLightTheme, DarkTheme: AdaptedDarkTheme } = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
   reactNavigationDark: NavigationDarkTheme,
 });
 
-export const LightTheme = {
+const LightTheme = {
   ...MD3LightTheme,
   ...AdaptedLightTheme,
   colors: {
@@ -14,7 +15,7 @@ export const LightTheme = {
     ...AdaptedLightTheme.colors,
   },
 };
-export const DarkTheme = {
+const DarkTheme = {
   ...MD3DarkTheme,
   ...AdaptedDarkTheme,
   colors: {
@@ -22,3 +23,24 @@ export const DarkTheme = {
     ...AdaptedDarkTheme.colors,
   },
 };
+
+export const ThemeContext = createContext({
+  theme: DarkTheme,
+  toggleTheme: () => { },
+  isDark: true
+})
+
+export const ThemeProvider = ({ children }) => {
+  const [isDark, setIsDark] = useState(false);
+  return (
+    <ThemeContext.Provider value={{
+      isDark: isDark,
+      theme: isDark ? DarkTheme : LightTheme,
+      toggleTheme: () => setIsDark(val => !val)
+    }}>
+      <PaperProvider theme={isDark ? DarkTheme : LightTheme}>
+        {children}
+      </PaperProvider>
+    </ThemeContext.Provider>
+  );
+}
