@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator<StackParamList>();
 const SettingsNavigaor = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="settingsHome" options={{ title: "Stadiums" }} component={() => <Text>Settings Home</Text>} />
+      <Stack.Screen name="settingsHome" options={{ title: "Settings" }} component={() => <Text>Settings Home</Text>} />
     </Stack.Navigator>
   )
 }
