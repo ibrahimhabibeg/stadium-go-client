@@ -1,9 +1,10 @@
 import { graphql } from "../gql";
 import { useQuery } from "@apollo/client";
-import { View, ScrollView } from "react-native";
-import { ActivityIndicator, Text } from "react-native-paper";
+import { ScrollView } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
+import StadiumCard from "./StadiumCard";
 
-const getStadiumsQuery = graphql(/* GraphQL */`
+const getStadiumsQuery = graphql(/* GraphQL */ `
   query GetStadiums {
     getStadiums {
       id
@@ -26,30 +27,18 @@ const getStadiumsQuery = graphql(/* GraphQL */`
 
 const Home = () => {
   const { loading, error, data } = useQuery(getStadiumsQuery);
-  
-  if (loading) return <ActivityIndicator animating={true} />
-  else return (
-    <>
-    <ScrollView>
-      {
-        data.getStadiums.map(stadium => 
-          <View key={stadium.id}>
-            <Text>-----------------------</Text>
-            <Text>{stadium.id}</Text>
-            <Text>{stadium.name}</Text>
-            <Text>{stadium.desc}</Text>
-            <Text>{stadium.count}</Text>
-            <Text>{stadium.size}</Text>
-            <Text>{stadium.location?.longitude}</Text>
-            <Text>{stadium.location?.latitude}</Text>
-            <Text>{stadium.owner.username}</Text>
-            <Text>-----------------------</Text>
-          </View>
-        )
-      }
-    </ScrollView>
-    </>
-  );
-}
+
+  if (loading) return <ActivityIndicator animating={true} />;
+  else
+    return (
+      <>
+        <ScrollView>
+          {data.getStadiums.map((stadium) => (
+            <StadiumCard key ={stadium.id} stadium={stadium} />
+          ))}
+        </ScrollView>
+      </>
+    );
+};
 
 export default Home;
