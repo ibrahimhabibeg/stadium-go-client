@@ -10,7 +10,7 @@ import AuthNavigaor from "./AuthNavigator";
 type TabParamList = {
   Stadiums: undefined;
   Settings: undefined;
-  User: undefined;
+  Auth: undefined;
 }
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -18,7 +18,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 const screenToIconMap = {
   Stadiums: "soccer-field",
   Settings: "cog",
-  User: "account"
+  Auth: "account"
 }
 
 const MainNavigator = () => {
@@ -30,7 +30,7 @@ const MainNavigator = () => {
         tabBarIcon: ({color, size}) => <IconButton icon={screenToIconMap[route.name]} iconColor={color} size={size}/>
       })}>
         <Tab.Screen name="Stadiums" component={StadiumsNavigator} />
-        <Tab.Screen name="User" component={AuthNavigaor} />
+        <Tab.Screen name="Auth" component={AuthNavigaor} />
         <Tab.Screen name="Settings" component={SettingsNavigaor} />
       </Tab.Navigator>
     </NavigationContainer>

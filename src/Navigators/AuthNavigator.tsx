@@ -1,46 +1,76 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useContext } from "react";
 import { AuthContext } from "../Providers/Auth";
-import { Button, Text } from "react-native-paper";
-import { View } from "react-native";
+import { Text } from "react-native-paper";
+import Signup from "../auth/Signup";
 
-type StackParamList = {
+export type NotLoggedInParamList = {
+  authSignup: undefined;
+  authLogin: undefined;
+  authOwnerSignup: undefined;
+  authOwnerLogin: undefined;
+};
+
+export type OwnerParamList = {
   authHome: undefined;
-}
+};
 
-const Stack = createNativeStackNavigator<StackParamList>();
+export type UserParamList = {
+  authHome: undefined;
+};
+
+const OwnerStack = createNativeStackNavigator<OwnerParamList>();
+const UserStack = createNativeStackNavigator<UserParamList>();
+const NotLoggedInStack = createNativeStackNavigator<NotLoggedInParamList>();
 
 const AuthNavigaor = () => {
-  const {id, token, isOwner, isLoggedIn, login, logout} = useContext(AuthContext);
-  
-  const homeText = () => {
-    if(!isLoggedIn) return <Text>You arer not logged in</Text>
-    else if(isOwner) return <Text>You are logged in as an owner {id} with token {token}</Text>
-    else return <Text>You are logged in as a user {id} with token {token}</Text>
-  }
+  const { isOwner, isLoggedIn } = useContext(AuthContext);
 
-  const home = () => {
-    return(
-      <View>
-        {homeText()}
-        <Button onPress={logout}>
-          logout
-        </Button>
-        <Button onPress={()=>login({id:1, token:"fer2332", isOwner:false})}>
-          Login as user
-        </Button>
-        <Button onPress={()=>login({id:1, token:"sg4we", isOwner:true})}>
-          Login as owner
-        </Button>
-      </View>
-    )
-  }
-
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="authHome" options={{ title: "Authorization" }} component={home} />
-    </Stack.Navigator>
-  )
-}
+  if (!isLoggedIn)
+    return (
+      <NotLoggedInStack.Navigator>
+        <NotLoggedInStack.Screen
+          name="authSignup"
+          options={{ title: "Signup" }}
+          component={Signup}
+        />
+        <NotLoggedInStack.Screen
+          name="authLogin"
+          options={{ title: "Login" }}
+          component={() => <Text>Login</Text>}
+        />
+        <NotLoggedInStack.Screen
+          name="authOwnerSignup"
+          options={{ title: "Signup" }}
+          component={() => <Text>Signup</Text>}
+        />
+        <NotLoggedInStack.Screen
+          name="authOwnerLogin"
+          options={{ title: "Login" }}
+          component={() => <Text>Login</Text>}
+        />
+      </NotLoggedInStack.Navigator>
+    );
+  else if (isOwner)
+    return (
+      <OwnerStack.Navigator>
+        <OwnerStack.Screen
+          name="authHome"
+          options={{ title: "Owner" }}
+          component={() => <Text>Owner</Text>}
+        />
+      </OwnerStack.Navigator>
+    );
+  else
+    return (
+      <UserStack.Navigator>
+        <UserStack.Screen
+          name="authHome"
+          options={{ title: "User" }}
+          component={() => <Text>User</Text>}
+        />
+      </UserStack.Navigator>
+    );
+};
 
 export default AuthNavigaor;
