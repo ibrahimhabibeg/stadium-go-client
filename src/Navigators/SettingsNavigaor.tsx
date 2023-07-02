@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Button } from "react-native-paper";
-import { ThemeContext } from "../Theme";
+import { ThemeContext } from "../Providers/Theme";
 import { useContext } from "react";
 
 type StackParamList = {
