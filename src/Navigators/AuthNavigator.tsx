@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../Providers/Auth";
 import { Text } from "react-native-paper";
 import Signup from "../auth/Signup";
+import Login from "../auth/Login";
 import OwnerSignup from "../auth/OwnerSignup";
 
 export type NotLoggedInParamList = {
@@ -38,7 +39,7 @@ const AuthNavigaor = () => {
         <NotLoggedInStack.Screen
           name="authLogin"
           options={{ title: "Login" }}
-          component={() => <Text>Login</Text>}
+          component={Login}
         />
         <NotLoggedInStack.Screen
           name="authOwnerSignup"
