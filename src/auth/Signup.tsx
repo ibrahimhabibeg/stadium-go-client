@@ -1,4 +1,4 @@
-import { Button, HelperText, Text, TextInput } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { useContext, useEffect, useState } from "react";
 import { NotLoggedInParamList } from "../Navigators/AuthNavigator";
@@ -6,6 +6,9 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { graphql } from "../gql";
 import { useMutation } from "@apollo/client";
 import { AuthContext } from "../Providers/Auth";
+import UsernameInput from "./UsernameInput";
+import EmailInput from "./EmailInput";
+import PasswordInput from "./PasswordInput";
 
 type propsType = NativeStackScreenProps<NotLoggedInParamList, "authSignup">;
 
@@ -32,14 +35,16 @@ const Signup = ({ navigation }: propsType) => {
   const [signup, { data, loading, error: mutationError }] =
     useMutation(signupMutation);
 
-  /**
-   * Each value in errors shows the error meassage for the input field.
-   * Empty string means no error
-   */
   const [errors, setErrors] = useState({
     USERNAME: "",
     EMAIL: "",
     PASSWORD: "",
+  });
+
+  const [signupData, setSignupData] = useState({
+    username: "",
+    email: "",
+    password: "",
   });
 
   useEffect(() => {
@@ -54,13 +59,6 @@ const Signup = ({ navigation }: propsType) => {
       setErrors((oldVal) => ({ ...oldVal, [errorField]: message }));
     }
   }, [data]);
-
-  const [signupData, setSignupData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-  const [showPassword, setShowPassword] = useState(false);
 
   const usernameChangeTextHandler = (username: string) => {
     setSignupData((oldSignupData) => ({ ...oldSignupData, username }));
@@ -77,8 +75,6 @@ const Signup = ({ navigation }: propsType) => {
     setErrors((oldVal) => ({ ...oldVal, PASSWORD: "" }));
   };
 
-  const toggleShowPassword = () => setShowPassword((val) => !val);
-
   const navigateToLogin = () => navigation.navigate("authLogin");
 
   const navigateToOwnerSignup = () => navigation.navigate("authOwnerSignup");
@@ -90,46 +86,21 @@ const Signup = ({ navigation }: propsType) => {
       <Text variant="titleLarge" style={styles.title}>
         Create Account
       </Text>
-      <TextInput
-        mode="outlined"
-        label="Username"
+      <UsernameInput
         value={signupData.username}
+        error={errors.USERNAME}
         onChangeText={usernameChangeTextHandler}
-        style={styles.input}
-        error={errors.USERNAME !== ""}
       />
-      <HelperText type="error" visible={errors.USERNAME !== ""}>
-        {errors.USERNAME}
-      </HelperText>
-      <TextInput
-        mode="outlined"
-        label="Email"
+      <EmailInput
         value={signupData.email}
+        error={errors.EMAIL}
         onChangeText={emailChangeTextHandler}
-        style={styles.input}
-        error={errors.EMAIL !== ""}
       />
-      <HelperText type="error" visible={errors.EMAIL !== ""}>
-        {errors.EMAIL}
-      </HelperText>
-      <TextInput
-        mode="outlined"
-        label="Password"
+      <PasswordInput
         value={signupData.password}
+        error={errors.PASSWORD}
         onChangeText={passwordChangeTextHandler}
-        style={styles.input}
-        secureTextEntry={!showPassword}
-        right={
-          <TextInput.Icon
-            icon={showPassword ? "eye-off" : "eye"}
-            onPress={toggleShowPassword}
-          />
-        }
-        error={errors.PASSWORD !== ""}
       />
-      <HelperText type="error" visible={errors.PASSWORD !== ""}>
-        {errors.PASSWORD}
-      </HelperText>
       <Button
         mode="contained"
         style={styles.button}
@@ -160,9 +131,6 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: "10%",
     alignSelf: "center",
-  },
-  input: {
-    marginTop: "2%",
   },
   button: {
     marginTop: "5%",

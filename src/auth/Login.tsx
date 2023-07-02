@@ -1,4 +1,4 @@
-import { Button, HelperText, Text, TextInput } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { useContext, useEffect, useState } from "react";
 import { NotLoggedInParamList } from "../Navigators/AuthNavigator";
@@ -6,6 +6,8 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { graphql } from "../gql";
 import { useMutation } from "@apollo/client";
 import { AuthContext } from "../Providers/Auth";
+import EmailInput from "./EmailInput";
+import PasswordInput from "./PasswordInput";
 
 type propsType = NativeStackScreenProps<NotLoggedInParamList, "authSignup">;
 
@@ -32,16 +34,11 @@ const Login = ({ navigation }: propsType) => {
   const [login, { data, loading, error: mutationError }] =
     useMutation(loginMutation);
 
-  /**
-   * Each value in errors shows the error meassage for the input field.
-   * Empty string means no error
-   */
   const [errors, setErrors] = useState({
     EMAIL: "",
     PASSWORD: "",
   });
   const [loginData, setLoginData] = useState({ email: "", password: "" });
-  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (data?.userLogin.__typename === "UserAuthPayload") {
@@ -66,8 +63,6 @@ const Login = ({ navigation }: propsType) => {
     setErrors((oldVal) => ({ ...oldVal, PASSWORD: "" }));
   };
 
-  const toggleShowPassword = () => setShowPassword((val) => !val);
-
   const navigateToSignup = () => navigation.navigate("authSignup");
 
   const navigateToOwnerLogin = () => navigation.navigate("authOwnerLogin");
@@ -79,35 +74,16 @@ const Login = ({ navigation }: propsType) => {
       <Text variant="titleLarge" style={styles.title}>
         Login
       </Text>
-      <TextInput
-        mode="outlined"
-        label="Email"
+      <EmailInput
         value={loginData.email}
+        error={errors.EMAIL}
         onChangeText={emailChangeTextHandler}
-        style={styles.input}
-        error={errors.EMAIL !== ""}
       />
-      <HelperText type="error" visible={errors.EMAIL !== ""}>
-        {errors.EMAIL}
-      </HelperText>
-      <TextInput
-        mode="outlined"
-        label="Password"
+      <PasswordInput
         value={loginData.password}
+        error={errors.PASSWORD}
         onChangeText={passwordChangeTextHandler}
-        style={styles.input}
-        secureTextEntry={!showPassword}
-        right={
-          <TextInput.Icon
-            icon={showPassword ? "eye-off" : "eye"}
-            onPress={toggleShowPassword}
-          />
-        }
-        error={errors.PASSWORD !== ""}
       />
-      <HelperText type="error" visible={errors.PASSWORD !== ""}>
-        {errors.PASSWORD}
-      </HelperText>
       <Button
         mode="contained"
         style={styles.button}
@@ -138,9 +114,6 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: "10%",
     alignSelf: "center",
-  },
-  input: {
-    marginTop: "2%",
   },
   button: {
     marginTop: "5%",
