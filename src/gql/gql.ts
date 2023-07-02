@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  mutation UserLogin($email: String!, $password: String!) {\n    userLogin(email: $email, password: $password) {\n      ... on UserAuthPayload {\n        token\n        user {\n          id\n        }\n      }\n      ... on AuthError {\n        errorField\n        message\n      }\n    }\n  }\n": types.UserLoginDocument,
+    "\n  mutation OwnerLogin($email: String!, $password: String!) {\n    ownerLogin(email: $email, password: $password) {\n      ... on OwnerAuthPayload {\n        token\n        owner {\n          id\n        }\n      }\n      ... on AuthError {\n        errorField\n        message\n      }\n    }\n  }\n": types.OwnerLoginDocument,
     "\n  mutation OwnerSignup($signupData: SignupInput!) {\n    ownerSignup(signupData: $signupData) {\n      ... on AuthError {\n        message\n        errorField\n      }\n      ... on OwnerAuthPayload {\n        token\n        owner {\n          id\n        }\n      }\n    }\n  }\n": types.OwnerSignupDocument,
     "\n  mutation UserSignup($signupData: SignupInput!) {\n    userSignup(signupData: $signupData) {\n      ... on UserAuthPayload {\n        token\n        user {\n          id\n        }\n      }\n      ... on AuthError {\n        message\n        errorField\n      }\n    }\n  }\n": types.UserSignupDocument,
     "\n  query GetStadiums {\n    getStadiums {\n      id\n      owner {\n        id\n        email\n        username\n      }\n      name\n      count\n      desc\n      size\n      location {\n        latitude\n        longitude\n      }\n    }\n  }\n": types.GetStadiumsDocument,
@@ -37,6 +38,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation UserLogin($email: String!, $password: String!) {\n    userLogin(email: $email, password: $password) {\n      ... on UserAuthPayload {\n        token\n        user {\n          id\n        }\n      }\n      ... on AuthError {\n        errorField\n        message\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation UserLogin($email: String!, $password: String!) {\n    userLogin(email: $email, password: $password) {\n      ... on UserAuthPayload {\n        token\n        user {\n          id\n        }\n      }\n      ... on AuthError {\n        errorField\n        message\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation OwnerLogin($email: String!, $password: String!) {\n    ownerLogin(email: $email, password: $password) {\n      ... on OwnerAuthPayload {\n        token\n        owner {\n          id\n        }\n      }\n      ... on AuthError {\n        errorField\n        message\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation OwnerLogin($email: String!, $password: String!) {\n    ownerLogin(email: $email, password: $password) {\n      ... on OwnerAuthPayload {\n        token\n        owner {\n          id\n        }\n      }\n      ... on AuthError {\n        errorField\n        message\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

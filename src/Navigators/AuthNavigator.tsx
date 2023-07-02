@@ -5,6 +5,7 @@ import { Text } from "react-native-paper";
 import Signup from "../auth/Signup";
 import Login from "../auth/Login";
 import OwnerSignup from "../auth/OwnerSignup";
+import OwnerLogin from "../auth/OwnerLogin";
 
 export type NotLoggedInParamList = {
   authSignup: undefined;
@@ -49,7 +50,7 @@ const AuthNavigaor = () => {
         <NotLoggedInStack.Screen
           name="authOwnerLogin"
           options={{ title: "Login" }}
-          component={() => <Text>Login</Text>}
+          component={OwnerLogin}
         />
       </NotLoggedInStack.Navigator>
     );
