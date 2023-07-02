@@ -3,14 +3,14 @@ import { createContext, useState } from "react";
 type LoginParameter = {
   isOwner: boolean;
   token: string;
-  id: number;
+  id: string;
 };
 
 export const AuthContext = createContext({
   isLoggedIn: false,
   isOwner: false,
   token: "",
-  id: 0,
+  id: "",
   logout: () => {},
   login: (param: LoginParameter) => {},
 });
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     isLoggedIn: false,
     isOwner: false,
     token: "",
-    id: 0,
+    id: "",
   });
 
   const logout = () => {
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
       isLoggedIn: false,
       isOwner: false,
       token: "",
-      id: 0,
+      id: "",
     });
   };
 
