@@ -1,22 +1,16 @@
 import MainNavigator from "./Navigators/Main";
 import { ThemeProvider } from "./Providers/Theme";
 import { AuthProvider } from "./Providers/Auth";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { uri } from "./config/server";
-
-const client = new ApolloClient({
-  uri,
-  cache: new InMemoryCache(),
-});
+import Apollo from "./Providers/Apollo";
 
 const Index = () => (
-  <AuthProvider>
-    <ApolloProvider client={client}>
+  <Apollo>
+    <AuthProvider>
       <ThemeProvider>
         <MainNavigator />
       </ThemeProvider>
-    </ApolloProvider>
-  </AuthProvider>
+    </AuthProvider>
+  </Apollo>
 );
 
 export default Index;
