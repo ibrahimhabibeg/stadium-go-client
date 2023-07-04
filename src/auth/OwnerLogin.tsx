@@ -1,7 +1,7 @@
 import { Button, Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { useContext, useEffect, useState } from "react";
-import { NotLoggedInParamList } from "../Navigators/AuthNavigator";
+import { ParamList } from "../Navigators/Auth/NotAuth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { graphql } from "../gql";
 import { useMutation } from "@apollo/client";
@@ -9,7 +9,7 @@ import { AuthContext } from "../Providers/Auth";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 
-type propsType = NativeStackScreenProps<NotLoggedInParamList, "authSignup">;
+type propsType = NativeStackScreenProps<ParamList, "authSignup">;
 
 const loginMutation = graphql(/* GraphQL */ `
   mutation OwnerLogin($email: String!, $password: String!) {

@@ -5,7 +5,7 @@ import SettingsNavigaor from "./SettingsNavigaor";
 import { ThemeContext } from "../Providers/Theme";
 import { useContext } from "react";
 import { IconButton } from "react-native-paper";
-import AuthNavigaor from "./AuthNavigator";
+import AuthNavigaor from "./Auth/AuthNavigator";
 
 type TabParamList = {
   Stadiums: undefined;
