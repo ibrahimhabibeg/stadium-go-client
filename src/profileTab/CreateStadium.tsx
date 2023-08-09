@@ -25,7 +25,10 @@ const CreateStadium = ({ navigation }: propsType) => {
     size: 5,
   });
 
-  const [createStadium, { loading, data }] = useMutation(createStadiumMutation);
+  const [createStadium, { loading, data }] = useMutation(
+    createStadiumMutation,
+    { refetchQueries: ["GetOwnerProfileData"] }
+  );
 
   useEffect(() => {
     if (data?.createStadium.__typename === "Stadium") {
