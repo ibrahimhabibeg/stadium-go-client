@@ -5,9 +5,11 @@ import { AuthContext } from "../../Providers/Auth";
 import { graphql } from "../../gql";
 import { useQuery } from "@apollo/client";
 import OwnerProfile from "../../profileTab/OwnerProfile";
+import CreateStadium from "../../profileTab/CreateStadium";
 
 export type ParamList = {
   authHome: undefined;
+  authCreateStadium: undefined;
 };
 
 const getOwneUsernameQuery = graphql(/* GraphQL */ `
@@ -38,7 +40,12 @@ const Owner = () => {
       <Stack.Screen
         name="authHome"
         options={{ title: homeTitle }}
-        component={() => <OwnerProfile/>}
+        component={OwnerProfile}
+      />
+      <Stack.Screen
+        name="authCreateStadium"
+        options={{ title: homeTitle }}
+        component={CreateStadium}
       />
     </Stack.Navigator>
   );

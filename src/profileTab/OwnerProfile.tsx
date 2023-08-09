@@ -1,9 +1,10 @@
 import { useQuery } from "@apollo/client";
-import { useEffect } from "react";
 import { graphql } from "../gql";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 import { Image, ScrollView, StyleSheet, View } from "react-native";
 import StadiumCard from "../stadiums/StadiumCard";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { ParamList } from "../Navigators/Auth/Owner";
 
 const getOwnerProfileDataQuery = graphql(/* GraphQL */ `
   query GetOwnerProfileData {
@@ -31,8 +32,14 @@ const getOwnerProfileDataQuery = graphql(/* GraphQL */ `
   }
 `);
 
-const OwnerProfile = () => {
+type propsType = NativeStackScreenProps<ParamList, "authHome">;
+
+const OwnerProfile = ({ navigation }: propsType) => {
   const { data, loading } = useQuery(getOwnerProfileDataQuery);
+
+  const navigateToCreateStadium = () =>
+    navigation.navigate("authCreateStadium");
+
   if (loading) return <ActivityIndicator />;
   else if (data.verifyOwner.__typename === "OwnerAuthorizationError") {
     return (
@@ -46,10 +53,19 @@ const OwnerProfile = () => {
   } else {
     return (
       <ScrollView contentContainerStyle={styles.mainView}>
-        <Image source={require("../../assets/stadium.jpg")} style={styles.img}/>
+        <Image
+          source={require("../../assets/stadium.jpg")}
+          style={styles.img}
+        />
         <Text style={styles.username}>{data.verifyOwner.username}</Text>
         <Text>{data.verifyOwner.email}</Text>
-        <Button style={styles.button} mode="contained">Create New Stadium</Button>
+        <Button
+          style={styles.button}
+          mode="contained"
+          onPress={navigateToCreateStadium}
+        >
+          Create New Stadium
+        </Button>
         <Text style={styles.myStadiumsText}>My Stadiums</Text>
         <View>
           {data.verifyOwner.stadiums.map((stadium) => (
@@ -62,28 +78,28 @@ const OwnerProfile = () => {
 };
 
 const styles = StyleSheet.create({
-  img:{
-    width:120,
+  img: {
+    width: 120,
     height: 120,
     borderRadius: 60,
-    marginTop: 20
+    marginTop: 20,
   },
   mainView: {
     display: "flex",
     flexDirection: "column",
-    alignItems:"center"
+    alignItems: "center",
   },
   username: {
     fontSize: 20,
   },
   button: {
     marginTop: 20,
-    width: "75%"
+    width: "75%",
   },
-  myStadiumsText:{
+  myStadiumsText: {
     fontSize: 20,
-    marginTop: 20
-  }
+    marginTop: 20,
+  },
 });
 
 export default OwnerProfile;
