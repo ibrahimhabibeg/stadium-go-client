@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/Auth";
 import { graphql } from "../../gql";
 import { useQuery } from "@apollo/client";
+import OwnerProfile from "../../profileTab/OwnerProfile";
 
 export type ParamList = {
   authHome: undefined;
@@ -37,7 +38,7 @@ const Owner = () => {
       <Stack.Screen
         name="authHome"
         options={{ title: homeTitle }}
-        component={() => <Text>Owner</Text>}
+        component={() => <OwnerProfile/>}
       />
     </Stack.Navigator>
   );

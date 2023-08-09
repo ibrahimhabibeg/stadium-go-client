@@ -11,30 +11,42 @@ type TabParamList = {
   Stadiums: undefined;
   Settings: undefined;
   Auth: undefined;
-}
+};
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
 const screenToIconMap = {
   Stadiums: "soccer-field",
   Settings: "cog",
-  Auth: "account"
-}
+  Auth: "account",
+};
 
 const MainNavigator = () => {
   const { theme } = useContext(ThemeContext);
   return (
     <NavigationContainer theme={theme}>
-      <Tab.Navigator screenOptions={({route})=>({
-        headerShown: false,
-        tabBarIcon: ({color, size}) => <IconButton icon={screenToIconMap[route.name]} iconColor={color} size={size}/>
-      })}>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <IconButton
+              icon={screenToIconMap[route.name]}
+              iconColor={color}
+              size={size}
+            />
+          ),
+        })}
+      >
         <Tab.Screen name="Stadiums" component={StadiumsNavigator} />
-        <Tab.Screen name="Auth" component={AuthNavigaor} />
+        <Tab.Screen
+          name="Auth"
+          component={AuthNavigaor}
+          options={{ title: "My Profile" }}
+        />
         <Tab.Screen name="Settings" component={SettingsNavigaor} />
       </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default MainNavigator;
