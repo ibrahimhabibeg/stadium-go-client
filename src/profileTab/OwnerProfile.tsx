@@ -5,6 +5,8 @@ import { Image, ScrollView, StyleSheet, View } from "react-native";
 import StadiumCard from "../stadiums/StadiumCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ParamList } from "../Navigators/Auth/Owner";
+import { useContext } from "react";
+import { AuthContext } from "../Providers/Auth";
 
 const getOwnerProfileDataQuery = graphql(/* GraphQL */ `
   query GetOwnerProfileData {
@@ -36,6 +38,7 @@ type propsType = NativeStackScreenProps<ParamList, "authHome">;
 
 const OwnerProfile = ({ navigation }: propsType) => {
   const { data, loading } = useQuery(getOwnerProfileDataQuery);
+  const { logout } = useContext(AuthContext);
 
   const navigateToCreateStadium = () =>
     navigation.navigate("authCreateStadium");
@@ -59,6 +62,7 @@ const OwnerProfile = ({ navigation }: propsType) => {
         />
         <Text style={styles.username}>{data.verifyOwner.username}</Text>
         <Text>{data.verifyOwner.email}</Text>
+        <Button onPress={logout}>Logout</Button>
         <Button
           style={styles.button}
           mode="contained"
@@ -69,7 +73,7 @@ const OwnerProfile = ({ navigation }: propsType) => {
         <Text style={styles.myStadiumsText}>My Stadiums</Text>
         <View>
           {data.verifyOwner.stadiums.map((stadium) => (
-            <StadiumCard stadium={stadium}></StadiumCard>
+            <StadiumCard stadium={stadium} key={stadium.id}></StadiumCard>
           ))}
         </View>
       </ScrollView>
@@ -93,7 +97,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
-    marginTop: 20,
+    marginTop: 15,
     width: "75%",
   },
   myStadiumsText: {
