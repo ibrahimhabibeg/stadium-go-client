@@ -44,7 +44,7 @@ const Owner = () => {
       />
       <Stack.Screen
         name="authCreateStadium"
-        options={{ title: homeTitle }}
+        options={{ title: "Create Stadium" }}
         component={CreateStadium}
       />
     </Stack.Navigator>

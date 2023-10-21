@@ -6,6 +6,8 @@ import { CreateStadiumInput } from "../gql/graphql";
 import { useMutation } from "@apollo/client";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ParamList } from "../Navigators/Auth/Owner";
+import LocationSelector from "../location/LocationSelector";
+import type { Region } from "react-native-maps";
 
 const createStadiumMutation = graphql(`
   mutation Mutation($stadiumData: createStadiumInput!) {
@@ -23,6 +25,13 @@ const CreateStadium = ({ navigation }: propsType) => {
   const [stadiumData, setStadiumData] = useState<CreateStadiumInput>({
     name: "",
     size: 5,
+  });
+
+  const [region, setRegion] = useState<Region>({
+    latitude: 31.25,
+    longitude: 32.3,
+    latitudeDelta: 0.05,
+    longitudeDelta: 0.05,
   });
 
   const [createStadium, { loading, data }] = useMutation(
@@ -45,7 +54,18 @@ const CreateStadium = ({ navigation }: propsType) => {
   const sizeChangeHandler = (size: string) =>
     setStadiumData((oldStadiumData) => ({ ...oldStadiumData, size }));
 
-  const submit = () => createStadium({ variables: { stadiumData } });
+  const regionChangeHandler = (region: Region) => setRegion(region);
+
+  const submit = () =>
+    createStadium({
+      variables: {
+        stadiumData: {
+          latitude: region.latitude,
+          longitude: region.longitude,
+          ...stadiumData,
+        },
+      },
+    });
 
   return (
     <ScrollView contentContainerStyle={styles.mainView}>
@@ -63,6 +83,7 @@ const CreateStadium = ({ navigation }: propsType) => {
         label="Description"
         value={stadiumData.desc}
         onChangeText={descChangeHandler}
+        multiline={true}
       />
       <TextInput
         style={styles.input}
@@ -72,6 +93,10 @@ const CreateStadium = ({ navigation }: propsType) => {
         onChangeText={sizeChangeHandler}
         keyboardType="numeric"
       />
+      <Text variant="bodyMedium" style={styles.locationText}>
+        Location
+      </Text>
+      <LocationSelector region={region} onRegionChange={regionChangeHandler} />
       <Button
         style={styles.button}
         mode="contained"
@@ -101,6 +126,10 @@ const styles = StyleSheet.create({
     marginTop: 30,
     width: "80%",
     maxWidth: 450,
+    marginBottom: 30,
+  },
+  locationText: {
+    width: "80%",
   },
 });
 
