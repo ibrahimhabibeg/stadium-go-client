@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { graphql } from "../gql";
-import { ActivityIndicator, Button, Text } from "react-native-paper";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Button, Text, Divider } from "react-native-paper";
+import { Image, ScrollView, StyleSheet, View, FlatList } from "react-native";
 import StadiumCard from "../stadiums/StadiumCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ParamList } from "../Navigators/Auth/Owner";
@@ -9,12 +9,12 @@ import { useContext } from "react";
 import { AuthContext } from "../Providers/Auth";
 
 const getOwnerProfileDataQuery = graphql(/* GraphQL */ `
-  query GetOwnerProfileData {
+  query GetOwnerProfileData($cursor: ID, $take: Int) {
     verifyOwner {
       ... on Owner {
         email
         username
-        stadiums {
+        stadiums(cursor: $cursor, take: $take) {
           id
           name
           size
@@ -37,7 +37,9 @@ const getOwnerProfileDataQuery = graphql(/* GraphQL */ `
 type propsType = NativeStackScreenProps<ParamList, "authHome">;
 
 const OwnerProfile = ({ navigation }: propsType) => {
-  const { data, loading } = useQuery(getOwnerProfileDataQuery);
+  const { data, loading, fetchMore } = useQuery(getOwnerProfileDataQuery, {
+    variables: { take: 10 },
+  });
   const { logout } = useContext(AuthContext);
 
   const navigateToCreateStadium = () =>
@@ -48,7 +50,7 @@ const OwnerProfile = ({ navigation }: propsType) => {
     return (
       <View>
         <Text>
-          The following error occurred while connecting to the server:{" "}
+          The following error occurred while connecting to the server:
           {data.verifyOwner.message}
         </Text>
       </View>
@@ -71,11 +73,26 @@ const OwnerProfile = ({ navigation }: propsType) => {
           Create New Stadium
         </Button>
         <Text style={styles.myStadiumsText}>My Stadiums</Text>
-        <View>
-          {data.verifyOwner.stadiums.map((stadium) => (
-            <StadiumCard stadium={stadium} key={stadium.id}></StadiumCard>
-          ))}
-        </View>
+        <FlatList
+          keyExtractor={(stadium) => stadium.id}
+          data={data.verifyOwner.stadiums}
+          renderItem={({ item: stadium }) => (
+            <StadiumCard key={stadium.id} stadium={stadium} />
+          )}
+          onEndReached={() => {
+            fetchMore({
+              variables: {
+                cursor:
+                  data.verifyOwner.__typename === "Owner"
+                    ? data.verifyOwner.stadiums[
+                        data.verifyOwner.stadiums.length - 1
+                      ].id
+                    : null,
+              },
+            });
+          }}
+          ItemSeparatorComponent={Divider}
+        />
       </ScrollView>
     );
   }

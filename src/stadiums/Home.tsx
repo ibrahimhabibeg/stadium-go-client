@@ -22,7 +22,6 @@ const Home = () => {
           <StadiumCard key={stadium.id} stadium={stadium} />
         )}
         onEndReached={() => {
-          console.log("HI");
           fetchMore({
             variables: {
               cursor: data.getStadiums[data.getStadiums.length - 1].id,
