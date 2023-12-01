@@ -1,39 +1,42 @@
 import { useQuery } from "@apollo/client";
 import { FlatList } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 import StadiumCard from "../StadiumCard/StadiumCard";
 import getStadiumsQuery from "./getStadiumsQuery";
 import { Divider } from "react-native-paper";
 import { FlatListHeader } from "./FlatListHeader";
+import { useState } from "react";
 
 const Home = () => {
+  const [filter, setFilter] = useState("");
   const { loading, error, data, fetchMore } = useQuery(getStadiumsQuery, {
-    variables: {
-      take: 10,
-    },
+    variables: { filter, take: 10 },
   });
 
-  if (loading) return <ActivityIndicator animating={true} />;
-  else
-    return (
-      <FlatList
-        ListHeaderComponent={FlatListHeader}
-        stickyHeaderIndices={[0]}
-        keyExtractor={(stadium) => stadium.id}
-        data={data.getStadiums}
-        renderItem={({ item: stadium }) => (
-          <StadiumCard key={stadium.id} stadium={stadium} />
-        )}
-        onEndReached={() => {
+  return (
+    <FlatList
+      ListHeaderComponent={
+        <FlatListHeader
+          value={filter}
+          onValueChange={(text) => setFilter(text)}
+        />
+      }
+      stickyHeaderIndices={[0]}
+      keyExtractor={(stadium) => stadium.id}
+      data={loading?[]:data?.getStadiums}
+      renderItem={({ item: stadium }) => (
+        <StadiumCard key={stadium.id} stadium={stadium} />
+      )}
+      onEndReached={() => {
+        if (!loading)
           fetchMore({
             variables: {
               cursor: data.getStadiums[data.getStadiums.length - 1].id,
             },
           });
-        }}
-        ItemSeparatorComponent={Divider}
-      />
-    );
+      }}
+      ItemSeparatorComponent={Divider}
+    />
+  );
 };
 
 export default Home;
