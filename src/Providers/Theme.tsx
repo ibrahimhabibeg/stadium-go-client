@@ -1,11 +1,22 @@
-import { MD3DarkTheme, MD3LightTheme, PaperProvider, adaptNavigationTheme } from 'react-native-paper';
-import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme, } from "@react-navigation/native";
-import { createContext, useState } from 'react';
+import {
+  MD3DarkTheme,
+  MD3LightTheme,
+  PaperProvider,
+  adaptNavigationTheme,
+} from "react-native-paper";
+import {
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from "@react-navigation/native";
+import { createContext, useEffect, useState } from "react";
+import { setItemAsync, getItemAsync } from "expo-secure-store";
+import { IS_DARK_KEY } from "../config/secureStore";
 
-const { LightTheme: AdaptedLightTheme, DarkTheme: AdaptedDarkTheme } = adaptNavigationTheme({
-  reactNavigationLight: NavigationDefaultTheme,
-  reactNavigationDark: NavigationDarkTheme,
-});
+const { LightTheme: AdaptedLightTheme, DarkTheme: AdaptedDarkTheme } =
+  adaptNavigationTheme({
+    reactNavigationLight: NavigationDefaultTheme,
+    reactNavigationDark: NavigationDarkTheme,
+  });
 
 const LightTheme = {
   ...MD3LightTheme,
@@ -26,21 +37,38 @@ const DarkTheme = {
 
 export const ThemeContext = createContext({
   theme: DarkTheme,
-  toggleTheme: () => { },
-  isDark: true
-})
+  toggleTheme: () => {},
+  isDark: true,
+});
 
 export const ThemeProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(false);
+
+  const setDefaultState = async () => {
+    const cachedValue = await getItemAsync(IS_DARK_KEY);
+    setIsDark(cachedValue === "true");
+  };
+
+  useEffect(() => {
+    setDefaultState();
+  }, []);
+
+  const toggleTheme = async () => {
+    await setItemAsync(IS_DARK_KEY, String(!isDark));
+    setIsDark((val) => !val);
+  };
+
   return (
-    <ThemeContext.Provider value={{
-      isDark: isDark,
-      theme: isDark ? DarkTheme : LightTheme,
-      toggleTheme: () => setIsDark(val => !val)
-    }}>
+    <ThemeContext.Provider
+      value={{
+        isDark: isDark,
+        theme: isDark ? DarkTheme : LightTheme,
+        toggleTheme,
+      }}
+    >
       <PaperProvider theme={isDark ? DarkTheme : LightTheme}>
         {children}
       </PaperProvider>
     </ThemeContext.Provider>
   );
-}
+};
