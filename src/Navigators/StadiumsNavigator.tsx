@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Text } from "react-native-paper";
-import Home from "../stadiums/Home";
+import Home from "../stadiums/Home/Home";
 
 type StackParamList = {
   stadiumsHome: undefined;

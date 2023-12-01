@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { graphql } from "../gql";
 import { ActivityIndicator, Button, Text, Divider } from "react-native-paper";
 import { Image, ScrollView, StyleSheet, View, FlatList } from "react-native";
-import StadiumCard from "../stadiums/StadiumCard";
+import StadiumCard from "../stadiums/StadiumCard/StadiumCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ParamList } from "../Navigators/Auth/Owner";
 import { useContext } from "react";

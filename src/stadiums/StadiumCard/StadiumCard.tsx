@@ -39,7 +39,7 @@ const StadiumCard = ({ stadium }: propsType) => {
         </View>
       </View>
       <Image
-        source={require("../../assets/stadium.jpg")}
+        source={require("../../../assets/stadium.jpg")}
         style={styles.image}
       />
     </View>

@@ -1,9 +1,10 @@
 import { useQuery } from "@apollo/client";
 import { FlatList } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import StadiumCard from "./StadiumCard";
+import StadiumCard from "../StadiumCard/StadiumCard";
 import getStadiumsQuery from "./getStadiumsQuery";
 import { Divider } from "react-native-paper";
+import { FlatListHeader } from "./FlatListHeader";
 
 const Home = () => {
   const { loading, error, data, fetchMore } = useQuery(getStadiumsQuery, {
@@ -16,6 +17,8 @@ const Home = () => {
   else
     return (
       <FlatList
+        ListHeaderComponent={FlatListHeader}
+        stickyHeaderIndices={[0]}
         keyExtractor={(stadium) => stadium.id}
         data={data.getStadiums}
         renderItem={({ item: stadium }) => (
