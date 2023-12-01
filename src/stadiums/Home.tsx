@@ -1,43 +1,36 @@
-import { graphql } from "../gql";
 import { useQuery } from "@apollo/client";
-import { ScrollView } from "react-native";
+import { FlatList } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import StadiumCard from "./StadiumCard";
-
-const getStadiumsQuery = graphql(/* GraphQL */ `
-  query GetStadiums {
-    getStadiums {
-      id
-      owner {
-        id
-        email
-        username
-      }
-      name
-      count
-      desc
-      size
-      location {
-        latitude
-        longitude
-      }
-    }
-  }
-`);
+import getStadiumsQuery from "./getStadiumsQuery";
+import { Divider } from "react-native-paper";
 
 const Home = () => {
-  const { loading, error, data } = useQuery(getStadiumsQuery);
+  const { loading, error, data, fetchMore } = useQuery(getStadiumsQuery, {
+    variables: {
+      take: 10,
+    },
+  });
 
   if (loading) return <ActivityIndicator animating={true} />;
   else
     return (
-      <>
-        <ScrollView>
-          {data.getStadiums.map((stadium) => (
-            <StadiumCard key ={stadium.id} stadium={stadium} />
-          ))}
-        </ScrollView>
-      </>
+      <FlatList
+        keyExtractor={(stadium) => stadium.id}
+        data={data.getStadiums}
+        renderItem={({ item: stadium }) => (
+          <StadiumCard key={stadium.id} stadium={stadium} />
+        )}
+        onEndReached={() => {
+          console.log("HI");
+          fetchMore({
+            variables: {
+              cursor: data.getStadiums[data.getStadiums.length - 1].id,
+            },
+          });
+        }}
+        ItemSeparatorComponent={Divider}
+      />
     );
 };
 

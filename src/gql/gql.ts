@@ -20,7 +20,7 @@ const documents = {
     "\n  mutation UserSignup($signupData: SignupInput!) {\n    userSignup(signupData: $signupData) {\n      ... on UserAuthPayload {\n        token\n        user {\n          id\n        }\n      }\n      ... on AuthError {\n        message\n        errorField\n      }\n    }\n  }\n": types.UserSignupDocument,
     "\n  mutation Mutation($stadiumData: createStadiumInput!) {\n    createStadium(stadiumData: $stadiumData) {\n      ... on Stadium {\n        id\n      }\n    }\n  }\n": types.MutationDocument,
     "\n  query GetOwnerProfileData {\n    verifyOwner {\n      ... on Owner {\n        email\n        username\n        stadiums {\n          id\n          name\n          size\n          location {\n            latitude\n            longitude\n          }\n          owner {\n            username\n          }\n        }\n      }\n      ... on OwnerAuthorizationError {\n        message\n      }\n    }\n  }\n": types.GetOwnerProfileDataDocument,
-    "\n  query GetStadiums {\n    getStadiums {\n      id\n      owner {\n        id\n        email\n        username\n      }\n      name\n      count\n      desc\n      size\n      location {\n        latitude\n        longitude\n      }\n    }\n  }\n": types.GetStadiumsDocument,
+    "\n  query GetStadiums($cursor: ID, $take: Int) {\n    getStadiums(cursor: $cursor, take: $take) {\n      id\n      owner {\n        id\n        email\n        username\n      }\n      name\n      count\n      size\n      location {\n        latitude\n        longitude\n      }\n    }\n  }\n": types.GetStadiumsDocument,
 };
 
 /**
@@ -68,7 +68,7 @@ export function graphql(source: "\n  query GetOwnerProfileData {\n    verifyOwne
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetStadiums {\n    getStadiums {\n      id\n      owner {\n        id\n        email\n        username\n      }\n      name\n      count\n      desc\n      size\n      location {\n        latitude\n        longitude\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetStadiums {\n    getStadiums {\n      id\n      owner {\n        id\n        email\n        username\n      }\n      name\n      count\n      desc\n      size\n      location {\n        latitude\n        longitude\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query GetStadiums($cursor: ID, $take: Int) {\n    getStadiums(cursor: $cursor, take: $take) {\n      id\n      owner {\n        id\n        email\n        username\n      }\n      name\n      count\n      size\n      location {\n        latitude\n        longitude\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetStadiums($cursor: ID, $take: Int) {\n    getStadiums(cursor: $cursor, take: $take) {\n      id\n      owner {\n        id\n        email\n        username\n      }\n      name\n      count\n      size\n      location {\n        latitude\n        longitude\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
