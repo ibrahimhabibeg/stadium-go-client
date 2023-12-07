@@ -1,4 +1,4 @@
-import { graphql } from "../gql";
+import { graphql } from "../../gql";
 import type { FieldPolicy } from "@apollo/client";
 
 export const verifyOwnerFieldPolicy: FieldPolicy = {
@@ -28,6 +28,9 @@ const getOwnerProfileDataQuery = graphql(/* GraphQL */ `
           }
           owner {
             username
+          }
+          city {
+            name
           }
         }
       }

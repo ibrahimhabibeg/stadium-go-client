@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import OwnerProfile from "../../profileTab/OwnerProfile";
-import CreateStadium from "../../profileTab/CreateStadium";
+import OwnerProfile from "../../profileTab/ownerProfile/OwnerProfile";
+import CreateStadium from "../../stadiums/create/CreateStadium";
 
 export type ParamList = {
   authHome: undefined;

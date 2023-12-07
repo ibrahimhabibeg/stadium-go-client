@@ -9,7 +9,7 @@ import { uri } from "../config/server";
 import { setContext } from "@apollo/client/link/context";
 import { getItemAsync } from "expo-secure-store";
 import { getStadiumsFieldPolicy } from "../stadiums/Home/getStadiumsQuery";
-import { verifyOwnerFieldPolicy } from "../profileTab/getOwnerProfileDataQuery";
+import { verifyOwnerFieldPolicy } from "../profileTab/ownerProfile/getOwnerProfileDataQuery";
 
 const httpLink = createHttpLink({ uri });
 

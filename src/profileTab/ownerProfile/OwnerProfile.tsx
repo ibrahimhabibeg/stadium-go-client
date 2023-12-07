@@ -1,38 +1,13 @@
 import { useQuery } from "@apollo/client";
-import { graphql } from "../gql";
+import { graphql } from "../../gql";
 import { ActivityIndicator, Button, Text, Divider } from "react-native-paper";
 import { Image, ScrollView, StyleSheet, View, FlatList } from "react-native";
-import StadiumCard from "../stadiums/StadiumCard/StadiumCard";
+import StadiumCard from "../../stadiums/StadiumCard/StadiumCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ParamList } from "../Navigators/Auth/Owner";
+import { ParamList } from "../../Navigators/Auth/Owner";
 import { useContext } from "react";
-import { AuthContext } from "../Providers/Auth";
-
-const getOwnerProfileDataQuery = graphql(/* GraphQL */ `
-  query GetOwnerProfileData($cursor: ID, $take: Int) {
-    verifyOwner {
-      ... on Owner {
-        email
-        username
-        stadiums(cursor: $cursor, take: $take) {
-          id
-          name
-          size
-          location {
-            latitude
-            longitude
-          }
-          owner {
-            username
-          }
-        }
-      }
-      ... on OwnerAuthorizationError {
-        message
-      }
-    }
-  }
-`);
+import { AuthContext } from "../../Providers/Auth";
+import getOwnerProfileDataQuery from "./getOwnerProfileDataQuery";
 
 type propsType = NativeStackScreenProps<ParamList, "authHome">;
 
@@ -59,7 +34,7 @@ const OwnerProfile = ({ navigation }: propsType) => {
     return (
       <ScrollView contentContainerStyle={styles.mainView}>
         <Image
-          source={require("../../assets/stadium.jpg")}
+          source={require("../../../assets/stadium.jpg")}
           style={styles.img}
         />
         <Text style={styles.username}>{data.verifyOwner.username}</Text>

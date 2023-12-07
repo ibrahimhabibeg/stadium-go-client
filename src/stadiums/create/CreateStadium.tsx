@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
-import { graphql } from "../gql";
-import { CreateStadiumInput } from "../gql/graphql";
+import { graphql } from "../../gql";
+import { CreateStadiumInput } from "../../gql/graphql";
 import { useMutation } from "@apollo/client";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ParamList } from "../Navigators/Auth/Owner";
-import LocationSelector from "../location/LocationSelector";
+import { ParamList } from "../../Navigators/Auth/Owner";
+import LocationSelector from "../../location/LocationSelector";
 import type { Region } from "react-native-maps";
+import CitySelector from "./CitySelector";
 
 const createStadiumMutation = graphql(`
   mutation Mutation($stadiumData: createStadiumInput!) {
@@ -56,6 +57,9 @@ const CreateStadium = ({ navigation }: propsType) => {
 
   const regionChangeHandler = (region: Region) => setRegion(region);
 
+  const cityChangeHandler = (cityId: string) =>
+    setStadiumData((oldStadiumData) => ({ ...oldStadiumData, cityId }));
+
   const submit = () =>
     createStadium({
       variables: {
@@ -93,6 +97,7 @@ const CreateStadium = ({ navigation }: propsType) => {
         onChangeText={sizeChangeHandler}
         keyboardType="numeric"
       />
+      <CitySelector cityId={stadiumData.cityId} onChangeCity={cityChangeHandler}/>
       <Text variant="bodyMedium" style={styles.locationText}>
         Location
       </Text>
@@ -111,14 +116,16 @@ const CreateStadium = ({ navigation }: propsType) => {
 
 const styles = StyleSheet.create({
   mainView: {
-    alignItems: "center",
+    width: "80%",
+    alignSelf: "center",
   },
   title: {
     fontSize: 25,
     marginVertical: 40,
+    alignSelf: "center",
   },
   input: {
-    width: "80%",
+    width: "100%",
     maxWidth: 450,
     marginBottom: 10,
   },
@@ -127,9 +134,11 @@ const styles = StyleSheet.create({
     width: "80%",
     maxWidth: 450,
     marginBottom: 30,
+    alignSelf: "center",
   },
   locationText: {
     width: "80%",
+    marginTop: 10,
   },
 });
 

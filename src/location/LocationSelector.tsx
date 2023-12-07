@@ -4,7 +4,7 @@ import type { Region } from "react-native-maps";
 const LocationSelector = ({ region, onRegionChange }: propsType) => {
   return (
     <MapView
-      style={{ width: "80%", height: 400, marginTop: 5 }}
+      style={{ width: "100%", height: 400, marginTop: 5, alignSelf: "center" }}
       region={region}
       onRegionChangeComplete={onRegionChange}
     >
