@@ -22,6 +22,9 @@ const getStadiumsQuery = graphql(/* GraphQL */ `
         latitude
         longitude
       }
+      city{
+        name
+      }
     }
   }
 `);

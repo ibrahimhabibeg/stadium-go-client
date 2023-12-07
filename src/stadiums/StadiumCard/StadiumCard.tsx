@@ -9,6 +9,7 @@ type propsType = {
     size?: number;
     owner: { username: string };
     location?: { latitude: number; longitude: number };
+    city?: { name: string };
   };
 };
 
@@ -20,6 +21,9 @@ const StadiumCard = ({ stadium }: propsType) => {
           <Text variant="titleMedium" style={styles.title} numberOfLines={1}>
             {stadium.name}
           </Text>
+          {stadium.city && (
+            <Text variant="labelMedium">{stadium.city.name}</Text>
+          )}
           {stadium.location && (
             <LocationURLLabel
               url={`https://maps.google.com/?q=${stadium.location.latitude},${stadium.location.longitude}`}
