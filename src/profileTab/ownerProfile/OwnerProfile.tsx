@@ -1,7 +1,6 @@
 import { useQuery } from "@apollo/client";
-import { graphql } from "../../gql";
 import { ActivityIndicator, Button, Text, Divider } from "react-native-paper";
-import { Image, ScrollView, StyleSheet, View, FlatList } from "react-native";
+import { Image, StyleSheet, View, FlatList } from "react-native";
 import StadiumCard from "../../stadiums/StadiumCard/StadiumCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ParamList } from "../../Navigators/Auth/Owner";
@@ -32,43 +31,45 @@ const OwnerProfile = ({ navigation }: propsType) => {
     );
   } else {
     return (
-      <ScrollView contentContainerStyle={styles.mainView}>
-        <Image
-          source={require("../../../assets/stadium.jpg")}
-          style={styles.img}
-        />
-        <Text style={styles.username}>{data.verifyOwner.username}</Text>
-        <Text>{data.verifyOwner.email}</Text>
-        <Button onPress={logout}>Logout</Button>
-        <Button
-          style={styles.button}
-          mode="contained"
-          onPress={navigateToCreateStadium}
-        >
-          Create New Stadium
-        </Button>
-        <Text style={styles.myStadiumsText}>My Stadiums</Text>
-        <FlatList
-          keyExtractor={(stadium) => stadium.id}
-          data={data.verifyOwner.stadiums}
-          renderItem={({ item: stadium }) => (
-            <StadiumCard key={stadium.id} stadium={stadium} />
-          )}
-          onEndReached={() => {
-            fetchMore({
-              variables: {
-                cursor:
-                  data.verifyOwner.__typename === "Owner"
-                    ? data.verifyOwner.stadiums[
-                        data.verifyOwner.stadiums.length - 1
-                      ].id
-                    : null,
-              },
-            });
-          }}
-          ItemSeparatorComponent={Divider}
-        />
-      </ScrollView>
+      <FlatList
+        ListHeaderComponent={
+          <View style={styles.mainView}>
+            <Image
+              source={require("../../../assets/stadium.jpg")}
+              style={styles.img}
+            />
+            <Text style={styles.username}>{data.verifyOwner.username}</Text>
+            <Text>{data.verifyOwner.email}</Text>
+            <Button onPress={logout}>Logout</Button>
+            <Button
+              style={styles.button}
+              mode="contained"
+              onPress={navigateToCreateStadium}
+            >
+              Create New Stadium
+            </Button>
+            <Text style={styles.myStadiumsText}>My Stadiums</Text>
+          </View>
+        }
+        keyExtractor={(stadium) => stadium.id}
+        data={data.verifyOwner.stadiums}
+        renderItem={({ item: stadium }) => (
+          <StadiumCard key={stadium.id} stadium={stadium} />
+        )}
+        onEndReached={() => {
+          fetchMore({
+            variables: {
+              cursor:
+                data.verifyOwner.__typename === "Owner"
+                  ? data.verifyOwner.stadiums[
+                      data.verifyOwner.stadiums.length - 1
+                    ].id
+                  : null,
+            },
+          });
+        }}
+        ItemSeparatorComponent={Divider}
+      />
     );
   }
 };
