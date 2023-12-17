@@ -1,4 +1,4 @@
-import MainNavigator from "./Navigators/Main";
+import MainNav from "./Navigators/MainNav";
 import { ThemeProvider } from "./Providers/Theme";
 import { AuthProvider } from "./Providers/Auth";
 import Apollo from "./Providers/Apollo";
@@ -7,7 +7,7 @@ const Index = () => (
   <Apollo>
     <AuthProvider>
       <ThemeProvider>
-        <MainNavigator />
+        <MainNav />
       </ThemeProvider>
     </AuthProvider>
   </Apollo>

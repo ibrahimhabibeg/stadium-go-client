@@ -5,7 +5,7 @@ import { graphql } from "../../gql";
 import { CreateStadiumInput } from "../../gql/graphql";
 import { useMutation } from "@apollo/client";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ParamList } from "../../Navigators/Auth/Owner";
+import { ParamList } from "../../Navigators/profile/OwnerProfileNav";
 import LocationSelector from "../../location/LocationSelector";
 import type { Region } from "react-native-maps";
 import CitySelector from "./CitySelector";

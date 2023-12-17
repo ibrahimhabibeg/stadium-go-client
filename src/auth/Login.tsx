@@ -1,7 +1,7 @@
 import { Button, Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { useContext, useEffect, useState } from "react";
-import { ParamList } from "../Navigators/Auth/NotAuth";
+import { ParamList } from "../Navigators/profile/NotAuthProfileNav";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { graphql } from "../gql";
 import { useMutation } from "@apollo/client";

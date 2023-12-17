@@ -3,7 +3,7 @@ import { ActivityIndicator, Button, Text, Divider } from "react-native-paper";
 import { Image, StyleSheet, View, FlatList } from "react-native";
 import StadiumCard from "../../stadiums/StadiumCard/StadiumCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ParamList } from "../../Navigators/Auth/Owner";
+import { ParamList } from "../../Navigators/profile/OwnerProfileNav";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/Auth";
 import getOwnerProfileDataQuery from "./getOwnerProfileDataQuery";

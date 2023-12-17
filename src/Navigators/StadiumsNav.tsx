@@ -5,17 +5,25 @@ import Home from "../stadiums/Home/Home";
 type StackParamList = {
   stadiumsHome: undefined;
   stadiumsStadium: undefined;
-}
+};
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
-const StadiumsNavigator = () => {
+const StadiumsNav = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="stadiumsHome" options={{ title: "Stadiums" }} component={Home} />
-      <Stack.Screen name="stadiumsStadium" options={{ title: "Name of a stadium" }} component={() => <Text>Stadiums Stadium</Text>} />
+      <Stack.Screen
+        name="stadiumsHome"
+        options={{ title: "Stadiums" }}
+        component={Home}
+      />
+      <Stack.Screen
+        name="stadiumsStadium"
+        options={{ title: "Name of a stadium" }}
+        component={() => <Text>Stadiums Stadium</Text>}
+      />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
-export default StadiumsNavigator;
+export default StadiumsNav;

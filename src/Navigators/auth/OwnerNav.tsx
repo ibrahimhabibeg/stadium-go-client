@@ -1,11 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import StadiumsNavigator from "./StadiumsNavigator";
-import SettingsNavigaor from "./SettingsNavigaor";
-import { ThemeContext } from "../Providers/Theme";
+import StadiumsNav from "../StadiumsNav";
+import SettingsNav from "../SettingsNav";
+import { ThemeContext } from "../../Providers/Theme";
 import { useContext } from "react";
 import { IconButton } from "react-native-paper";
-import AuthNavigaor from "./Auth/AuthNavigator";
+import OwnerProfileNav from "../profile/OwnerProfileNav";
 
 type TabParamList = {
   Stadiums: undefined;
@@ -21,7 +21,7 @@ const screenToIconMap = {
   Auth: "account",
 };
 
-const MainNavigator = () => {
+const OwnerNav = () => {
   const { theme } = useContext(ThemeContext);
   return (
     <NavigationContainer theme={theme}>
@@ -37,16 +37,12 @@ const MainNavigator = () => {
           ),
         })}
       >
-        <Tab.Screen name="Stadiums" component={StadiumsNavigator} />
-        <Tab.Screen
-          name="Auth"
-          component={AuthNavigaor}
-          options={{ title: "My Profile" }}
-        />
-        <Tab.Screen name="Settings" component={SettingsNavigaor} />
+        <Tab.Screen name="Stadiums" component={StadiumsNav} />
+        <Tab.Screen name="Auth" component={OwnerProfileNav} />
+        <Tab.Screen name="Settings" component={SettingsNav} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 };
 
-export default MainNavigator;
+export default OwnerNav;

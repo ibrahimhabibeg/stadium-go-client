@@ -7,7 +7,7 @@ export type ParamList = {
 
 const Stack = createNativeStackNavigator<ParamList>();
 
-const User = () => (
+const UserProfileNav = () => (
   <Stack.Navigator>
     <Stack.Screen
       name="authHome"
@@ -17,4 +17,4 @@ const User = () => (
   </Stack.Navigator>
 );
 
-export default User;
+export default UserProfileNav;

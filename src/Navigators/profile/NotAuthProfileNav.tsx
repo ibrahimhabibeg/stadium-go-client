@@ -13,7 +13,7 @@ export type ParamList = {
 
 const Stack = createNativeStackNavigator<ParamList>();
 
-const NotAuth = () => (
+const NotAuthProfileNav = () => (
   <Stack.Navigator>
     <Stack.Screen
       name="authSignup"
@@ -38,4 +38,4 @@ const NotAuth = () => (
   </Stack.Navigator>
 );
 
-export default NotAuth;
+export default NotAuthProfileNav;

@@ -9,7 +9,7 @@ export type ParamList = {
 
 const Stack = createNativeStackNavigator<ParamList>();
 
-const Owner = () => {
+const OwnerProfileNav = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -26,4 +26,4 @@ const Owner = () => {
   );
 };
 
-export default Owner;
+export default OwnerProfileNav;
