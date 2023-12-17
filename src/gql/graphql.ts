@@ -14,6 +14,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
 };
 
 export type AuthError = BaseError & {
@@ -40,10 +41,22 @@ export type BaseError = {
   message: Scalars['String']['output'];
 };
 
+export type BookTimeslotError = BaseError & {
+  __typename?: 'BookTimeslotError';
+  arbMessage: Scalars['String']['output'];
+  message: Scalars['String']['output'];
+};
+
 export type City = {
   __typename?: 'City';
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+};
+
+export type InvalidTimeslotDataError = BaseError & {
+  __typename?: 'InvalidTimeslotDataError';
+  arbMessage: Scalars['String']['output'];
+  message: Scalars['String']['output'];
 };
 
 export type Location = {
@@ -54,11 +67,23 @@ export type Location = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addTimeslot: AddTimeslotResult;
+  bookTimeslot: BookTimeslotResult;
   createStadium: CreateStadiumResult;
   ownerLogin: OwnerAuthResult;
   ownerSignup: OwnerAuthResult;
   userLogin: UserAuthResult;
   userSignup: UserAuthResult;
+};
+
+
+export type MutationAddTimeslotArgs = {
+  timeslotData: AddTimeslotInput;
+};
+
+
+export type MutationBookTimeslotArgs = {
+  timeslotId: Scalars['ID']['input'];
 };
 
 
@@ -146,6 +171,10 @@ export type SignupInput = {
 
 export type Stadium = {
   __typename?: 'Stadium';
+  /** Timeslots whose beginnig time is in the future and are not booked. */
+  avillableTimeslots: Array<Timeslot>;
+  /** Timeslots whose beginnig time is in the future and are booked. */
+  bookedTimeslots: Array<Timeslot>;
   city?: Maybe<City>;
   /** The number of stadiums of the same properties the owner has. */
   count: Scalars['Int']['output'];
@@ -154,15 +183,34 @@ export type Stadium = {
   id: Scalars['ID']['output'];
   location?: Maybe<Location>;
   name: Scalars['String']['output'];
+  /** Timeslots whose beginnig time is in the past. */
+  oldTimeslots: Array<Timeslot>;
   owner: Owner;
   /** The number of players per team including the goal keeper. */
   size?: Maybe<Scalars['Int']['output']>;
 };
 
+export type Timeslot = {
+  __typename?: 'Timeslot';
+  /** The user who booked the stadium for this timeslot. Null if not booked. */
+  bookedBy?: Maybe<User>;
+  /** Indicates the end of the allocated timeslot. */
+  endTime: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  /** Integer value representing the price for booking the stadium for this timeslot in EGP. */
+  price: Scalars['Int']['output'];
+  stadium: Stadium;
+  /** Indicates the beginning of the allocated timeslot. */
+  startTime: Scalars['DateTime']['output'];
+};
+
 export type User = {
   __typename?: 'User';
+  currentTimeslots: Array<Timeslot>;
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  previousTimeslots: Array<Timeslot>;
+  upcomingTimeslots: Array<Timeslot>;
   username: Scalars['String']['output'];
 };
 
@@ -180,6 +228,17 @@ export type UserAuthorizationError = BaseError & {
   arbMessage: Scalars['String']['output'];
   message: Scalars['String']['output'];
 };
+
+export type AddTimeslotInput = {
+  endTime: Scalars['DateTime']['input'];
+  price: Scalars['Int']['input'];
+  stadiumId: Scalars['ID']['input'];
+  startTime: Scalars['DateTime']['input'];
+};
+
+export type AddTimeslotResult = InvalidTimeslotDataError | OwnerAuthorizationError | Timeslot;
+
+export type BookTimeslotResult = BookTimeslotError | Timeslot | UserAuthorizationError;
 
 export type CreateStadiumInput = {
   cityId?: InputMaybe<Scalars['ID']['input']>;
