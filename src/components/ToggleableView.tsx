@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Card, IconButton, Text } from "react-native-paper";
+import type { StyleProp, ViewStyle } from "react-native";
 
 const ToggleableView = ({
   title,
   children,
   isExpandedOnStart = false,
+  style,
 }: propsType) => {
   const [isExpanded, setIsExpanded] = useState(isExpandedOnStart);
+
   return (
     <View
       style={{
@@ -15,6 +18,7 @@ const ToggleableView = ({
         alignSelf: "center",
         alignContent: "center",
         justifyContent: "center",
+        ...style,
       }}
     >
       <Card
@@ -43,6 +47,7 @@ type propsType = {
   title: string;
   children: React.JSX.Element;
   isExpandedOnStart?: boolean;
+  style?: ViewStyle;
 };
 
 export default ToggleableView;

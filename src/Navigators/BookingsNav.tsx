@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import BookingsHome from "../bookings/BookingsHome";
+import BookingsHome from "../bookings/Home/BookingsHome";
 
 type StackParamList = {
   bookingsHome: undefined;
