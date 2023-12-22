@@ -1,5 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Text } from "react-native-paper";
+import { useContext } from "react";
+import { Button, Text } from "react-native-paper";
+import { AuthContext } from "../../Providers/Auth";
 
 export type ParamList = {
   authHome: undefined;
@@ -7,14 +9,17 @@ export type ParamList = {
 
 const Stack = createNativeStackNavigator<ParamList>();
 
-const UserProfileNav = () => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="authHome"
-      options={{ title: "User" }}
-      component={() => <Text>User</Text>}
-    />
-  </Stack.Navigator>
-);
+const UserProfileNav = () => {
+  const { logout } = useContext(AuthContext);
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="authHome"
+        options={{ title: "User" }}
+        component={() => <Button onPress={logout}>Log out</Button>}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export default UserProfileNav;
