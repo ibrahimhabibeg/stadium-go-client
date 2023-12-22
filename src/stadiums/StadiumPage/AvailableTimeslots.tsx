@@ -14,11 +14,13 @@ const AvailableTimeslots = ({ timeslots }: propsType) => {
       <View>
         {timeslots.map((timeslot) => (
           <BookableTimeslot
+            key={timeslot.id}
+            id={timeslot.id}
             startTime={new Date(timeslot.startTime)}
             endTime={new Date(timeslot.endTime)}
             price={timeslot.price}
             style={{
-              marginTop: 10
+              marginTop: 10,
             }}
           />
         ))}
@@ -35,6 +37,7 @@ type timeslot = {
   endTime: string;
   price: number;
   startTime: string;
+  id: string;
 };
 
 export default AvailableTimeslots;

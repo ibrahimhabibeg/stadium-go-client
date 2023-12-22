@@ -8,7 +8,7 @@ import { IconButton } from "react-native-paper";
 import UserProfileNav from "../profile/UserProfileNav";
 import BookingsNav from "../BookingsNav";
 
-type TabParamList = {
+export type TabParamList = {
   Stadiums: undefined;
   Settings: undefined;
   Auth: undefined;

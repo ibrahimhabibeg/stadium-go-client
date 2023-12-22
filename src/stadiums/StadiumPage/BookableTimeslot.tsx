@@ -1,9 +1,45 @@
+import { useMutation } from "@apollo/client";
 import { StyleProp, View, ViewStyle } from "react-native";
-import { Card, IconButton, Text } from "react-native-paper";
+import {
+  Button,
+  Card,
+  IconButton,
+  Text,
+  Portal,
+  Snackbar,
+} from "react-native-paper";
+import bookTimeslotMutation from "./bookTimeslotMutation";
+import { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { TabParamList } from "../../Navigators/auth/UserNav";
 
-const BookableTimeslot = ({ price, startTime, endTime, style }: propsType) => {
+const BookableTimeslot = ({
+  id,
+  price,
+  startTime,
+  endTime,
+  style,
+}: propsType) => {
+  const [bookTimeslot, { data, loading }] = useMutation(bookTimeslotMutation, {
+    variables: { timeslotId: id },
+  });
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
+  const navigation = useNavigation<NativeStackNavigationProp<TabParamList>>();
+
+  useEffect(() => {
+    if (
+      data?.bookTimeslot.__typename === "BookTimeslotError" ||
+      data?.bookTimeslot.__typename === "UserAuthorizationError"
+    ) {
+      setIsErrorVisible(true);
+    } else if (data?.bookTimeslot.__typename === "Timeslot") {
+      navigation.navigate("Bookings");
+    }
+  }, [data]);
+
   return (
-    <Card style={style} contentStyle={{ flexDirection: "row", height: 200 }}>
+    <Card style={style} contentStyle={{ height: 250 }}>
       <View
         style={{
           justifyContent: "space-between",
@@ -42,11 +78,31 @@ const BookableTimeslot = ({ price, startTime, endTime, style }: propsType) => {
           <Text numberOfLines={3}>{price} EGP</Text>
         </View>
       </View>
+      <Button
+        mode="contained-tonal"
+        style={{ width: "80%", alignSelf: "center" }}
+        loading={loading}
+        onPress={() => bookTimeslot()}
+      >
+        Book Timeslot
+      </Button>
+      <Portal>
+        <Snackbar
+          visible={isErrorVisible}
+          onDismiss={() => setIsErrorVisible(false)}
+          action={{
+            label: "close",
+          }}
+        >
+          An error occured while booking timeslot
+        </Snackbar>
+      </Portal>
     </Card>
   );
 };
 
 type propsType = {
+  id: string;
   price: number;
   startTime: Date;
   endTime: Date;
