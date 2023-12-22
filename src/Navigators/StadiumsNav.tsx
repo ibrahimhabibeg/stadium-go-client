@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Text } from "react-native-paper";
 import Home from "../stadiums/Home/Home";
+import StadiumPage from "../stadiums/StadiumPage/StadiumPage";
 
 export type StackParamList = {
   stadiumsHome: undefined;
@@ -21,8 +21,8 @@ const StadiumsNav = () => {
       />
       <Stack.Screen
         name="stadiumsStadium"
-        options={{ title: "Name of a stadium" }}
-        component={() => <Text>Stadiums Stadium</Text>}
+        options={{ title: "Stadium" }}
+        component={StadiumPage}
       />
     </Stack.Navigator>
   );
