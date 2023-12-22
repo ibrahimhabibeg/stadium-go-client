@@ -5,9 +5,11 @@ const getBookingsQuery = graphql(/* GraphQL */ `
     verifyUser {
       ... on User {
         previousTimeslots {
+          id
           endTime
           price
           stadium {
+            id
             name
             owner {
               username
@@ -19,9 +21,11 @@ const getBookingsQuery = graphql(/* GraphQL */ `
           startTime
         }
         currentTimeslots {
+          id
           endTime
           price
           stadium {
+            id
             name
             owner {
               username
@@ -33,9 +37,11 @@ const getBookingsQuery = graphql(/* GraphQL */ `
           startTime
         }
         upcomingTimeslots {
+          id
           endTime
           price
           stadium {
+            id
             name
             owner {
               username

@@ -14,6 +14,7 @@ const UpcomingBookings = ({ bookings }: propsType) => {
       <View>
         {bookings.map((booking) => (
           <BookingCard
+            key={booking.id}
             stadiumName={booking.stadium.name}
             startTime={new Date(booking.startTime)}
             endTime={new Date(booking.endTime)}
@@ -36,6 +37,7 @@ type propsType = {
 
 type booking = {
   __typename?: "Timeslot";
+  id: string;
   endTime: any;
   price: number;
   startTime: any;

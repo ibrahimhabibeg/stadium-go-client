@@ -33,7 +33,7 @@ export const client = new ApolloClient({
         },
       },
       Stadium: {
-        keyFields: false,
+        keyFields: ["id"],
       },
       Owner: {
         fields: {

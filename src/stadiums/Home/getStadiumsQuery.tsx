@@ -3,7 +3,14 @@ import type { FieldPolicy } from "@apollo/client";
 
 export const getStadiumsFieldPolicy: FieldPolicy = {
   keyArgs: ["$filter"],
-  merge: (existing = [], incoming) => [...existing, ...incoming],
+  merge: (existing = [], incoming) => {
+    let unique = [...existing, ...incoming].reduce(function (acc, curr) {
+      if (!acc.some((element) => element["__ref"] === curr["__ref"]))
+        acc.push(curr);
+      return acc;
+    }, []);
+    return unique;
+  },
 };
 
 const getStadiumsQuery = graphql(/* GraphQL */ `
@@ -22,7 +29,7 @@ const getStadiumsQuery = graphql(/* GraphQL */ `
         latitude
         longitude
       }
-      city{
+      city {
         name
       }
     }
