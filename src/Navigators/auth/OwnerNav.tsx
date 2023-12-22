@@ -38,7 +38,11 @@ const OwnerNav = () => {
         })}
       >
         <Tab.Screen name="Stadiums" component={StadiumsNav} />
-        <Tab.Screen name="Auth" component={OwnerProfileNav} />
+        <Tab.Screen
+          name="Auth"
+          component={OwnerProfileNav}
+          options={{ title: "Profile" }}
+        />
         <Tab.Screen name="Settings" component={SettingsNav} />
       </Tab.Navigator>
     </NavigationContainer>

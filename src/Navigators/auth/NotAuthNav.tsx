@@ -39,7 +39,11 @@ const NotAuthNav = () => {
         })}
       >
         <Tab.Screen name="Stadiums" component={StadiumsNav} />
-        <Tab.Screen name="Auth" component={NotAuthProfileNav} />
+        <Tab.Screen
+          name="Auth"
+          component={NotAuthProfileNav}
+          options={{ title: "Profile" }}
+        />
         <Tab.Screen name="Settings" component={SettingsNav} />
       </Tab.Navigator>
     </NavigationContainer>
