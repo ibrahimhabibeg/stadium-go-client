@@ -5,12 +5,19 @@ import getStadiumsQuery from "./getStadiumsQuery";
 import { Divider } from "react-native-paper";
 import { FlatListHeader } from "./FlatListHeader";
 import { useState } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StackParamList } from "../../Navigators/StadiumsNav";
 
-const Home = () => {
+type propsType = NativeStackScreenProps<StackParamList, "stadiumsHome">;
+
+const Home = ({ navigation }: propsType) => {
   const [filter, setFilter] = useState("");
   const { loading, error, data, fetchMore } = useQuery(getStadiumsQuery, {
     variables: { filter, take: 10 },
   });
+
+  const navigateToStadium = (id: string) =>
+    navigation.navigate("stadiumsStadium", { id });
 
   return (
     <FlatList
@@ -22,9 +29,9 @@ const Home = () => {
       }
       stickyHeaderIndices={[0]}
       keyExtractor={(stadium) => stadium.id}
-      data={loading?[]:data?.getStadiums}
+      data={loading ? [] : data?.getStadiums}
       renderItem={({ item: stadium }) => (
-        <StadiumCard key={stadium.id} stadium={stadium} />
+        <StadiumCard key={stadium.id} stadium={stadium} navigateToStadium={navigateToStadium}/>
       )}
       onEndReached={() => {
         if (!loading)

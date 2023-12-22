@@ -1,5 +1,5 @@
-import { View, StyleSheet, Image } from "react-native";
-import { Avatar, Text } from "react-native-paper";
+import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { Avatar, IconButton, Text } from "react-native-paper";
 import LocationURLLabel from "./LocationUrlLabel";
 
 type propsType = {
@@ -11,26 +11,44 @@ type propsType = {
     location?: { latitude: number; longitude: number };
     city?: { name: string };
   };
+  navigateToStadium: (id: string) => void;
 };
 
-const StadiumCard = ({ stadium }: propsType) => {
+const StadiumCard = ({ stadium, navigateToStadium }: propsType) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => navigateToStadium(stadium.id)}
+    >
       <View style={styles.textContainer}>
         <View>
           <Text variant="titleMedium" style={styles.title} numberOfLines={1}>
             {stadium.name}
           </Text>
           {stadium.city && (
-            <Text variant="labelMedium">{stadium.city.name}</Text>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", height: 25 }}
+            >
+              <IconButton
+                icon={"map-marker"}
+                size={20}
+                style={{ marginLeft: 0 }}
+              />
+              <Text variant="labelMedium">{stadium.city.name}</Text>
+            </View>
           )}
-          {stadium.location && (
-            <LocationURLLabel
-              url={`https://maps.google.com/?q=${stadium.location.latitude},${stadium.location.longitude}`}
-            />
-          )}
+
           {stadium.size && (
-            <Text variant="labelMedium">Size: {stadium.size}</Text>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", height: 25 }}
+            >
+              <IconButton
+                icon={"account-group"}
+                size={20}
+                style={{ marginLeft: 0 }}
+              />
+              <Text variant="labelMedium">{stadium.size}</Text>
+            </View>
           )}
         </View>
         <View style={styles.ownerContainer}>
@@ -46,7 +64,7 @@ const StadiumCard = ({ stadium }: propsType) => {
         source={require("../../../assets/stadium.jpg")}
         style={styles.image}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -72,6 +90,7 @@ const styles = StyleSheet.create({
   ownerContainer: {
     display: "flex",
     flexDirection: "row",
+    marginTop: 20,
   },
   ownerIcon: {
     marginRight: 10,
