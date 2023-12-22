@@ -21,7 +21,7 @@ const screenToIconMap = {
   Stadiums: "soccer-field",
   Settings: "cog",
   Auth: "account",
-  Bookings: "account",
+  Bookings: "ticket",
 };
 
 const UserNav = () => {
