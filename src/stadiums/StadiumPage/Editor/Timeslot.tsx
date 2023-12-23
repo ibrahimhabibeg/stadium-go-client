@@ -26,7 +26,7 @@ const Timeslot = ({
           }}
         >
           <IconButton icon={"clock-in"} />
-          <Text numberOfLines={3}>{new Date(startTime).toUTCString()}</Text>
+          <Text numberOfLines={3}>{new Date(startTime).toLocaleString()}</Text>
         </View>
         <View
           style={{
@@ -36,7 +36,7 @@ const Timeslot = ({
           }}
         >
           <IconButton icon={"clock-out"} />
-          <Text numberOfLines={3}>{new Date(endTime).toUTCString()}</Text>
+          <Text numberOfLines={3}>{new Date(endTime).toLocaleString()}</Text>
         </View>
         <View
           style={{
