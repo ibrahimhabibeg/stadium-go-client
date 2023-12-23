@@ -1,35 +1,49 @@
-import {
-  ActivityIndicator,
-  Divider,
-  Text,
-  Avatar,
-  IconButton,
-} from "react-native-paper";
+import { ActivityIndicator } from "react-native-paper";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackParamList } from "../../Navigators/StadiumsNav";
 import { useQuery } from "@apollo/client";
 import getStadiumQuery from "./getStadiumQuery";
-import { ScrollView } from "react-native";
-import StadiumHeader from "./StadiumHeader";
-import StadiumBody from "./StadiumBody";
-import AvailableTimeslots from "./AvailableTimeslots";
+import { useContext } from "react";
+import { AuthContext } from "../../Providers/Auth";
+import EditorStadiumPage from "./EditorStadiumPage";
+import ViewerStadiumPage from "./ViewerStadiumPage";
 
 const StadiumPage = ({ route }: propsType) => {
-  const { id } = route.params;
+  const { id: stadiumId } = route.params;
+  const { isLoggedIn, isOwner, id: ownerId } = useContext(AuthContext);
   const { data, loading } = useQuery(getStadiumQuery, {
-    variables: { stadiumId: id },
+    variables: { stadiumId },
   });
   if (loading) return <ActivityIndicator />;
-  else
-    return (
-      <ScrollView contentContainerStyle={{ width: "90%", alignSelf: "center" }}>
-        <StadiumHeader stadium={data.getStadium} />
-        <StadiumBody stadium={data.getStadium} />
-        <AvailableTimeslots timeslots={data.getStadium.avillableTimeslots}/>
-      </ScrollView>
-    );
+  else if (isLoggedIn && isOwner && ownerId === data.getStadium.owner.id)
+    return <EditorStadiumPage stadium={data.getStadium} />;
+  else return <ViewerStadiumPage stadium={data.getStadium} />;
 };
 
 type propsType = NativeStackScreenProps<StackParamList, "stadiumsStadium">;
+
+export type timeslot = {
+  endTime: string;
+  price: number;
+  startTime: string;
+  id: string;
+};
+
+export type stadium = {
+  name: string;
+  city?: {
+    name: string;
+  };
+  owner: {
+    username: string;
+  };
+  desc?: string;
+  location?: {
+    latitude: number;
+    longitude: number;
+  };
+  size?: number;
+  avillableTimeslots: timeslot[];
+};
 
 export default StadiumPage;

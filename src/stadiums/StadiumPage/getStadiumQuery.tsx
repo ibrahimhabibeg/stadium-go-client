@@ -22,6 +22,7 @@ const getStadiumQuery = graphql(/* GraphQL */ `
       size
       owner {
         username
+        id
       }
     }
   }

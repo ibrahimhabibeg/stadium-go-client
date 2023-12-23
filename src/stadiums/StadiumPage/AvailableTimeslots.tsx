@@ -1,6 +1,7 @@
 import ToggleableView from "../../components/ToggleableView";
 import { View } from "react-native";
 import BookableTimeslot from "./BookableTimeslot";
+import { timeslot } from "./StadiumPage";
 
 const AvailableTimeslots = ({ timeslots }: propsType) => {
   return (
@@ -31,13 +32,6 @@ const AvailableTimeslots = ({ timeslots }: propsType) => {
 
 type propsType = {
   timeslots: timeslot[];
-};
-
-type timeslot = {
-  endTime: string;
-  price: number;
-  startTime: string;
-  id: string;
 };
 
 export default AvailableTimeslots;
