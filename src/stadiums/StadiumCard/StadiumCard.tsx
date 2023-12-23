@@ -1,7 +1,8 @@
 import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Avatar, IconButton, Text } from "react-native-paper";
-import LocationURLLabel from "./LocationUrlLabel";
-
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamList } from "../../Navigators/StadiumsNav";
 type propsType = {
   stadium: {
     id: string;
@@ -11,14 +12,15 @@ type propsType = {
     location?: { latitude: number; longitude: number };
     city?: { name: string };
   };
-  navigateToStadium: (id: string) => void;
 };
 
-const StadiumCard = ({ stadium, navigateToStadium }: propsType) => {
+const StadiumCard = ({ stadium }: propsType) => {
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
+
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigateToStadium(stadium.id)}
+      onPress={() => navigation.navigate("stadiumsStadium", { id: stadium.id })}
     >
       <View style={styles.textContainer}>
         <View>
