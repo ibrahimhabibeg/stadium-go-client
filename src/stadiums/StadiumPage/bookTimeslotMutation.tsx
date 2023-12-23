@@ -6,6 +6,12 @@ const bookTimeslotMutation = graphql(/* GraphQL */ `
       ... on Timeslot {
         id
       }
+      ... on UserAuthorizationError {
+        message
+      }
+      ... on BookTimeslotError {
+        message
+      }
     }
   }
 `);

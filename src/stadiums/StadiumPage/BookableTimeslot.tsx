@@ -25,6 +25,7 @@ const BookableTimeslot = ({
     variables: { timeslotId: id },
   });
   const [isErrorVisible, setIsErrorVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigation = useNavigation<NativeStackNavigationProp<TabParamList>>();
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const BookableTimeslot = ({
       data?.bookTimeslot.__typename === "UserAuthorizationError"
     ) {
       setIsErrorVisible(true);
+      setErrorMessage(data.bookTimeslot.message);
     } else if (data?.bookTimeslot.__typename === "Timeslot") {
       navigation.navigate("Bookings");
     }
@@ -94,7 +96,7 @@ const BookableTimeslot = ({
             label: "close",
           }}
         >
-          An error occured while booking timeslot
+          {errorMessage}
         </Snackbar>
       </Portal>
     </Card>
