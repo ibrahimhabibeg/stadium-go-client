@@ -1,6 +1,6 @@
 import { Text, IconButton } from "react-native-paper";
 import { View } from "react-native";
-import LocationURLLabel from "../StadiumCard/LocationUrlLabel";
+import LocationURLLabel from "../../StadiumCard/LocationUrlLabel";
 
 const StadiumBody = ({ stadium }: propsType) => {
   return (

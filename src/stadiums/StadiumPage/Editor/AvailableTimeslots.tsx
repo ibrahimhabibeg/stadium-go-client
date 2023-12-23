@@ -1,7 +1,7 @@
-import ToggleableView from "../../components/ToggleableView";
+import ToggleableView from "../../../components/ToggleableView";
 import { View } from "react-native";
-import BookableTimeslot from "./BookableTimeslot";
-import { timeslot } from "./StadiumPage";
+import Timeslot from "./Timeslot";
+import type { timeslot } from "./EditorStadiumPage";
 
 const AvailableTimeslots = ({ timeslots }: propsType) => {
   return (
@@ -14,15 +14,12 @@ const AvailableTimeslots = ({ timeslots }: propsType) => {
     >
       <View>
         {timeslots.map((timeslot) => (
-          <BookableTimeslot
+          <Timeslot
             key={timeslot.id}
-            id={timeslot.id}
-            startTime={new Date(timeslot.startTime)}
-            endTime={new Date(timeslot.endTime)}
-            price={timeslot.price}
             style={{
               marginTop: 10,
             }}
+            {...timeslot}
           />
         ))}
       </View>

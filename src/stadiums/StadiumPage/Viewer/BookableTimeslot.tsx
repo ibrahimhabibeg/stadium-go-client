@@ -12,7 +12,7 @@ import bookTimeslotMutation from "./bookTimeslotMutation";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { TabParamList } from "../../Navigators/auth/UserNav";
+import { TabParamList } from "../../../Navigators/auth/UserNav";
 
 const BookableTimeslot = ({
   id,

@@ -1,13 +1,31 @@
-import { graphql } from "../../gql";
+import { graphql } from "../../../gql";
 
 const getStadiumQuery = graphql(/* GraphQL */ `
-  query GetStadium($stadiumId: ID!) {
+  query GetStadiumForOwner($stadiumId: ID!) {
     getStadium(stadiumId: $stadiumId) {
-      avillableTimeslots {
-        id
+      bookedTimeslots {
+        price
         endTime
         startTime
+        bookedBy {
+          username
+        }
+        id
+      }
+      avillableTimeslots {
+        endTime
         price
+        startTime
+        id
+      }
+      oldTimeslots {
+        startTime
+        endTime
+        price
+        bookedBy {
+          username
+        }
+        id
       }
       city {
         name

@@ -2,11 +2,11 @@ import { ActivityIndicator } from "react-native-paper";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackParamList } from "../../Navigators/StadiumsNav";
 import { useQuery } from "@apollo/client";
-import getStadiumQuery from "./getStadiumQuery";
+import getStadiumQuery from "./Viewer/getStadiumQuery";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/Auth";
-import EditorStadiumPage from "./EditorStadiumPage";
-import ViewerStadiumPage from "./ViewerStadiumPage";
+import EditorStadiumPage from "./Editor/EditorStadiumPage";
+import ViewerStadiumPage from "./Viewer/ViewerStadiumPage";
 
 const StadiumPage = ({ route }: propsType) => {
   const { id: stadiumId } = route.params;
@@ -16,34 +16,10 @@ const StadiumPage = ({ route }: propsType) => {
   });
   if (loading) return <ActivityIndicator />;
   else if (isLoggedIn && isOwner && ownerId === data.getStadium.owner.id)
-    return <EditorStadiumPage stadium={data.getStadium} />;
-  else return <ViewerStadiumPage stadium={data.getStadium} />;
+    return <EditorStadiumPage stadiumId={stadiumId} />;
+  else return <ViewerStadiumPage stadiumId={stadiumId} />;
 };
 
 type propsType = NativeStackScreenProps<StackParamList, "stadiumsStadium">;
-
-export type timeslot = {
-  endTime: string;
-  price: number;
-  startTime: string;
-  id: string;
-};
-
-export type stadium = {
-  name: string;
-  city?: {
-    name: string;
-  };
-  owner: {
-    username: string;
-  };
-  desc?: string;
-  location?: {
-    latitude: number;
-    longitude: number;
-  };
-  size?: number;
-  avillableTimeslots: timeslot[];
-};
 
 export default StadiumPage;

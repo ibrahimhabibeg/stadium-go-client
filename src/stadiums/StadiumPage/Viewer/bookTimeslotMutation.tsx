@@ -1,4 +1,4 @@
-import { graphql } from "../../gql";
+import { graphql } from "../../../gql";
 
 const bookTimeslotMutation = graphql(/* GraphQL */ `
   mutation BookTimeslot($timeslotId: ID!) {
