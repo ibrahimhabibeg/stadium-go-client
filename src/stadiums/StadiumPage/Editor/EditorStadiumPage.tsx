@@ -7,6 +7,7 @@ import { ActivityIndicator } from "react-native-paper";
 import BookedTimeslots from "./BookedTimeslots";
 import AvailableTimeslots from "./AvailableTimeslots";
 import OldTimeslots from "./PreviousTimeslots";
+import AddTimeslotButton from "./AddTimeslotButton";
 
 const EditorStadiumPage = ({ stadiumId }: propsType) => {
   const { data, loading } = useQuery(getStadiumQuery, {
@@ -21,6 +22,7 @@ const EditorStadiumPage = ({ stadiumId }: propsType) => {
         <BookedTimeslots timeslots={data.getStadium.bookedTimeslots} />
         <AvailableTimeslots timeslots={data.getStadium.avillableTimeslots} />
         <OldTimeslots timeslots={data.getStadium.oldTimeslots} />
+        <AddTimeslotButton stadiumId={stadiumId} />
       </ScrollView>
     );
 };

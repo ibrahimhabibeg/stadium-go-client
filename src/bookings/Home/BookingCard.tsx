@@ -65,7 +65,7 @@ const BookingCard = ({
           }}
         >
           <IconButton icon={"clock-in"} />
-          <Text numberOfLines={3}>{startTime.toUTCString()}</Text>
+          <Text numberOfLines={3}>{startTime.toLocaleString()}</Text>
         </View>
         <View
           style={{
@@ -75,7 +75,7 @@ const BookingCard = ({
           }}
         >
           <IconButton icon={"clock-out"} />
-          <Text numberOfLines={3}>{endTime.toUTCString()}</Text>
+          <Text numberOfLines={3}>{endTime.toLocaleString()}</Text>
         </View>
         <View
           style={{
