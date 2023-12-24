@@ -1,5 +1,11 @@
 import { useQuery } from "@apollo/client";
-import { ActivityIndicator, Button, Text, Divider } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Button,
+  Text,
+  Divider,
+  Avatar,
+} from "react-native-paper";
 import { Image, StyleSheet, View, FlatList } from "react-native";
 import StadiumCard from "../../stadiums/StadiumCard/StadiumCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -34,9 +40,9 @@ const OwnerProfile = ({ navigation }: propsType) => {
       <FlatList
         ListHeaderComponent={
           <View style={styles.mainView}>
-            <Image
-              source={require("../../../assets/stadium.jpg")}
-              style={styles.img}
+            <Avatar.Text
+              label={data.verifyOwner.username.substring(0, 1).toUpperCase()}
+              style={{ marginTop: 20 }}
             />
             <Text style={styles.username}>{data.verifyOwner.username}</Text>
             <Text>{data.verifyOwner.email}</Text>
