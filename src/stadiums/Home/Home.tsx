@@ -2,7 +2,6 @@ import { useQuery } from "@apollo/client";
 import { FlatList } from "react-native";
 import StadiumCard from "../StadiumCard/StadiumCard";
 import getStadiumsQuery from "./getStadiumsQuery";
-import { Divider } from "react-native-paper";
 import { FlatListHeader } from "./FlatListHeader";
 import { useState } from "react";
 
@@ -34,7 +33,6 @@ const Home = () => {
             },
           });
       }}
-      ItemSeparatorComponent={Divider}
     />
   );
 };

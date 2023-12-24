@@ -1,5 +1,5 @@
 import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Avatar, IconButton, Text } from "react-native-paper";
+import { Avatar, Card, IconButton, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../../Navigators/StadiumsNav";
@@ -18,94 +18,44 @@ const StadiumCard = ({ stadium }: propsType) => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
   return (
-    <TouchableOpacity
-      style={styles.container}
+    <Card
+      style={{ width: "80%", alignSelf: "center", marginVertical: 10 }}
       onPress={() => navigation.navigate("stadiumsStadium", { id: stadium.id })}
+      contentStyle={{ justifyContent: "center", minHeight: 220 }}
     >
-      <View style={styles.textContainer}>
-        <View>
-          <Text variant="titleMedium" style={styles.title} numberOfLines={1}>
-            {stadium.name}
-          </Text>
-          {stadium.city && (
-            <View
-              style={{ flexDirection: "row", alignItems: "center", height: 25 }}
-            >
-              <IconButton
-                icon={"map-marker"}
-                size={20}
-                style={{ marginLeft: 0 }}
-              />
-              <Text variant="labelMedium">{stadium.city.name}</Text>
-            </View>
-          )}
-
-          {stadium.size && (
-            <View
-              style={{ flexDirection: "row", alignItems: "center", height: 25 }}
-            >
-              <IconButton
-                icon={"account-group"}
-                size={20}
-                style={{ marginLeft: 0 }}
-              />
-              <Text variant="labelMedium">{stadium.size}</Text>
-            </View>
-          )}
-        </View>
-        <View style={styles.ownerContainer}>
-          <Avatar.Text
-            size={20}
-            label={stadium.owner.username.substring(0, 2)}
-            style={styles.ownerIcon}
-          />
-          <Text>{stadium.owner.username}</Text>
-        </View>
+      <View style={styles.row}>
+        <IconButton icon={"soccer-field"} />
+        <Text variant="titleMedium">{stadium.name}</Text>
       </View>
-      <Image
-        source={require("../../../assets/stadium.jpg")}
-        style={styles.image}
-      />
-    </TouchableOpacity>
+      {stadium.city && (
+        <View style={styles.row}>
+          <IconButton icon={"map-marker"} />
+          <Text>{stadium.city.name}</Text>
+        </View>
+      )}
+      {stadium.size && (
+        <View style={styles.row}>
+          <IconButton icon={"account-group"} />
+          <Text>{stadium.size}</Text>
+        </View>
+      )}
+      <View style={styles.row}>
+        <Avatar.Text
+          label={stadium.owner.username.substring(0, 1).toUpperCase()}
+          size={24}
+          style={{ marginRight: 15 }}
+        />
+        <Text>{stadium.owner.username}</Text>
+      </View>
+    </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginVertical: 20,
-    display: "flex",
+  row: {
     flexDirection: "row",
-    height: 130,
-    justifyContent: "space-around",
-  },
-  image: {
-    width: "25%",
-    height: "95%",
-    borderRadius: 10,
-  },
-  textContainer: {
-    display: "flex",
-    flexDirection: "column",
-    width: "60%",
-    justifyContent: "space-between",
-  },
-  ownerContainer: {
-    display: "flex",
-    flexDirection: "row",
-    marginTop: 20,
-  },
-  ownerIcon: {
-    marginRight: 10,
-  },
-  title: {
-    overflow: "hidden",
-  },
-  labelContainer: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  icon: {
-    height: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

@@ -1,12 +1,6 @@
 import { useQuery } from "@apollo/client";
-import {
-  ActivityIndicator,
-  Button,
-  Text,
-  Divider,
-  Avatar,
-} from "react-native-paper";
-import { Image, StyleSheet, View, FlatList } from "react-native";
+import { ActivityIndicator, Button, Text, Avatar } from "react-native-paper";
+import { StyleSheet, View, FlatList } from "react-native";
 import StadiumCard from "../../stadiums/StadiumCard/StadiumCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ParamList } from "../../Navigators/profile/OwnerProfileNav";
@@ -74,7 +68,6 @@ const OwnerProfile = ({ navigation }: propsType) => {
             },
           });
         }}
-        ItemSeparatorComponent={Divider}
       />
     );
   }
