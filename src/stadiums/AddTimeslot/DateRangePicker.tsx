@@ -11,36 +11,42 @@ const DateRangePicker = ({
   onChangeStartDate,
   onChangeEndDate,
 }: propsType) => {
-  const handleStartDateChange = (timestamp: number) => {
-    const newDate = new Date(startDate);
-    const requestedDate = new Date(timestamp);
+  
+  const mergeDate = (oldDate: Date, requestedDate: Date) => {
+    const newDate = new Date(oldDate);
     newDate.setDate(requestedDate.getDate());
+    newDate.setMonth(requestedDate.getMonth());
+    newDate.setFullYear(requestedDate.getFullYear());
+    return newDate;
+  };
+
+  const mergeTime = (oldDate: Date, requestedDate: Date) => {
+    const newDate = new Date(oldDate);
+    newDate.setMinutes(requestedDate.getMinutes());
+    newDate.setHours(requestedDate.getHours());
+    return newDate;
+  };
+
+  const handleStartDateChange = (timestamp: number) => {
+    const newDate = mergeDate(startDate, new Date(timestamp));
     onChangeStartDate(newDate);
     if (newDate > endDate) onChangeEndDate(newDate);
   };
 
   const handleStartTimeChange = (timestamp: number) => {
-    const newDate = new Date(startDate);
-    const requestedDate = new Date(timestamp);
-    newDate.setHours(requestedDate.getHours());
-    newDate.setMinutes(requestedDate.getMinutes());
+    const newDate = mergeTime(startDate, new Date(timestamp));
     onChangeStartDate(newDate);
     if (newDate > endDate) onChangeEndDate(newDate);
   };
 
   const handleEndDateChange = (timestamp: number) => {
-    const newDate = new Date(endDate);
-    const requestedDate = new Date(timestamp);
-    newDate.setDate(requestedDate.getDate());
+    const newDate = mergeDate(endDate, new Date(timestamp));
     onChangeEndDate(newDate);
     if (newDate < startDate) onChangeStartDate(newDate);
   };
 
   const handleEndTimeChange = (timestamp: number) => {
-    const newDate = new Date(endDate);
-    const requestedDate = new Date(timestamp);
-    newDate.setHours(requestedDate.getHours());
-    newDate.setMinutes(requestedDate.getMinutes());
+    const newDate = mergeTime(endDate, new Date(timestamp));
     onChangeEndDate(newDate);
     if (newDate < startDate) onChangeStartDate(newDate);
   };
