@@ -5,13 +5,12 @@ import {
   createHttpLink,
   ApolloLink,
 } from "@apollo/client";
-import { uri } from "../config/server";
 import { setContext } from "@apollo/client/link/context";
 import { getItemAsync } from "expo-secure-store";
 import { getStadiumsFieldPolicy } from "../stadiums/Home/getStadiumsQuery";
 import { verifyOwnerFieldPolicy } from "../profileTab/ownerProfile/getOwnerProfileDataQuery";
 
-const httpLink = createHttpLink({ uri });
+const httpLink = createHttpLink({ uri: process.env.EXPO_PUBLIC_BACKEND_URL });
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await getItemAsync("token");

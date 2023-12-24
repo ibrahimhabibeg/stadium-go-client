@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "stadium-go-client",
-    "slug": "stadium-go-client",
+    "name": "Stadium Go",
+    "slug": "StadiumGo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -9,25 +9,31 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#2e1065"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "config":{
+      "config": {
         "usesNonExemptEncryption": false
       }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#2e1065"
+      },
+      "package": "com.ibrahimhabibeg.stadiumgo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6ee4d57b-27b0-4160-b342-289128100d80"
+      }
     }
   }
 }
