@@ -33,10 +33,8 @@ const AddTimeslotPage = ({ route }: propsType) => {
     },
   });
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
-  
-  useEffect(() => {
-    console.log(navigation);
 
+  useEffect(() => {
     if (
       data?.addTimeslot.__typename === "InvalidTimeslotDataError" ||
       data?.addTimeslot.__typename === "OwnerAuthorizationError"
