@@ -41,7 +41,7 @@ const BookableTimeslot = ({
   }, [data]);
 
   return (
-    <Card style={style} contentStyle={{ height: 250 }}>
+    <Card style={style} contentStyle={{ minHeight: 250 }}>
       <View
         style={{
           justifyContent: "space-between",
@@ -82,7 +82,7 @@ const BookableTimeslot = ({
       </View>
       <Button
         mode="contained-tonal"
-        style={{ width: "80%", alignSelf: "center" }}
+        style={{ width: "80%", alignSelf: "center", marginBottom: 20 }}
         loading={loading}
         onPress={() => bookTimeslot()}
       >
